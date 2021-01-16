@@ -47,3 +47,10 @@ button:hover, button:active {
     background: deepskyblue;
     border-color: deepskyblue
 }
+
+#user-input {
+    margin: 1rem;
+    padding: 1rem;
+    border: 2px solid deepskyblue;
+    background: whitesmoke
+}
