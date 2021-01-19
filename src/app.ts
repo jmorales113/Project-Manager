@@ -34,7 +34,7 @@ class ProjectInput {
         this.peopleInputEl = this.formEl.querySelector("#people") as HTMLInputElement
         
         this.formListener()
-        this.appendForm()
+        this.renderForm()
     }
    
         private userInput(): [string, string, number] | void {
@@ -71,7 +71,7 @@ class ProjectInput {
             this.formEl.addEventListener("submit", this.submitForm)
         }
 
-        private appendForm() {
+        private renderForm() {
             this.appendEl.insertAdjacentElement("afterbegin", this.formEl)
         }
 }
@@ -81,17 +81,32 @@ class ProjectList {
     appendEl: HTMLDivElement
     sectionEl: HTMLElement
 
-    constructor(private type: "active" | "finished") {
+    constructor(private type: "Active" | "Finished") {
         this.templateEl = document.getElementById("project-list")! as HTMLTemplateElement
         this.appendEl = document.getElementById("app")! as HTMLDivElement
 
         const importTemplate = document.importNode(this.templateEl.content, true)
         this.sectionEl = importTemplate.firstElementChild as HTMLElement
         this.sectionEl.id = `${this.type}-projects`
+        this.renderProjectList()
+        this.renderSection()
+    }
+
+    private renderSection() {
+        const listId = `${this.type}-projects-list`
+        this.sectionEl.querySelector("ul")!.id = listId
+        this.sectionEl.querySelector("h2")!.textContent = `${this.type} projects`
+    }
+
+    private renderProjectList() {
+        this.appendEl.insertAdjacentElement("beforeend", this.sectionEl)
     }
 }
 
 const projectManager = new ProjectInput()
+const activeProjectList = new ProjectList("Active")
+const finishedProjectList = new ProjectList("Finished")
+
 
 
 

@@ -26,7 +26,7 @@ class ProjectInput {
         this.descriptionInputEl = this.formEl.querySelector("#description");
         this.peopleInputEl = this.formEl.querySelector("#people");
         this.formListener();
-        this.appendForm();
+        this.renderForm();
     }
     userInput() {
         const titleInput = this.titleInputEl.value;
@@ -57,7 +57,7 @@ class ProjectInput {
     formListener() {
         this.formEl.addEventListener("submit", this.submitForm);
     }
-    appendForm() {
+    renderForm() {
         this.appendEl.insertAdjacentElement("afterbegin", this.formEl);
     }
 }
@@ -72,7 +72,19 @@ class ProjectList {
         const importTemplate = document.importNode(this.templateEl.content, true);
         this.sectionEl = importTemplate.firstElementChild;
         this.sectionEl.id = `${this.type}-projects`;
+        this.renderProjectList();
+        this.renderSection();
+    }
+    renderSection() {
+        const listId = `${this.type}-projects-list`;
+        this.sectionEl.querySelector("ul").id = listId;
+        this.sectionEl.querySelector("h2").textContent = `${this.type} projects`;
+    }
+    renderProjectList() {
+        this.appendEl.insertAdjacentElement("beforeend", this.sectionEl);
     }
 }
 const projectManager = new ProjectInput();
+const activeProjectList = new ProjectList("Active");
+const finishedProjectList = new ProjectList("Finished");
 //# sourceMappingURL=app.js.map

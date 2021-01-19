@@ -54,3 +54,27 @@ button:hover, button:active {
     border: 2px solid deepskyblue;
     background: whitesmoke
 }
+
+.projects {
+  margin: 1rem;
+  border: 2px solid red;
+  color: white
+}
+
+.projects header {
+  background: red;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#Finished-projects {
+  border-color: deepskyblue;
+}
+
+#Finished-projects header {
+  background: deepskyblue;
+}
+
+
