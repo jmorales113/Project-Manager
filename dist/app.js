@@ -28,11 +28,31 @@ class ProjectInput {
         this.formListener();
         this.appendForm();
     }
+    userInput() {
+        const titleInput = this.titleInputEl.value;
+        const descriptionInput = this.descriptionInputEl.value;
+        const peopleInput = this.peopleInputEl.value;
+        if (titleInput.trim().length === 0 || descriptionInput.trim().length === 0 || peopleInput.trim().length === 0) {
+            alert("Invalid input, please try again!");
+            return;
+        }
+        else {
+            return [titleInput, descriptionInput, +peopleInput];
+        }
+    }
+    wipeInputFields() {
+        this.titleInputEl.value = "",
+            this.descriptionInputEl.value = "",
+            this.peopleInputEl.value = "";
+    }
     submitForm(e) {
         e.preventDefault();
-        console.log(this.titleInputEl.value);
-        console.log(this.descriptionInputEl.value);
-        console.log(this.peopleInputEl.value);
+        const inputUser = this.userInput();
+        if (Array.isArray(inputUser)) {
+            const [title, description, people] = inputUser;
+            console.log(title, description, people);
+        }
+        this.wipeInputFields();
     }
     formListener() {
         this.formEl.addEventListener("submit", this.submitForm);
@@ -44,5 +64,15 @@ class ProjectInput {
 __decorate([
     autobind
 ], ProjectInput.prototype, "submitForm", null);
+class ProjectList {
+    constructor(type) {
+        this.type = type;
+        this.templateEl = document.getElementById("project-list");
+        this.appendEl = document.getElementById("app");
+        const importTemplate = document.importNode(this.templateEl.content, true);
+        this.sectionEl = importTemplate.firstElementChild;
+        this.sectionEl.id = `${this.type}-projects`;
+    }
+}
 const projectManager = new ProjectInput();
 //# sourceMappingURL=app.js.map
