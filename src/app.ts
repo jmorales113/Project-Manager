@@ -1,3 +1,41 @@
+class ProjectState {
+    private listeners: any[] = []
+    private projects: any[] =  []
+    private static instance: ProjectState
+
+    private constructor() {
+
+    }
+
+    static getInstance() {
+        if (this.instance) {
+            return this.instance
+        }
+        this.instance = new ProjectState()
+        return this.instance
+    }
+
+    addListener(listenerFn: Function) {
+        this.listeners.push(listenerFn)
+    }
+
+    addProject(title: string, description: string, people: number) {
+        const newProject = {
+            id: Math.random().toString(),
+            title: title,
+            description: description,
+            people: people
+        }
+        this.projects.push(newProject)
+        for (const listenerFn of this.listeners) {
+            listenerFn(this.projects.slice())
+        }
+    }
+}
+
+const projectState = ProjectState.getInstance()
+
+
 // autobind decorator
 
 const autobind = (_: any, _2: string, descriptor: PropertyDescriptor) => {
@@ -11,8 +49,6 @@ const autobind = (_: any, _2: string, descriptor: PropertyDescriptor) => {
     }
     return adjustedDescriptor
 }
-
-
 
 class ProjectInput {
     templateEl: HTMLTemplateElement
@@ -62,9 +98,9 @@ class ProjectInput {
             const inputUser = this.userInput()
             if (Array.isArray(inputUser)) {
                 const [title, description, people] = inputUser
-                console.log(title, description, people)
+                projectState.addProject(title, description, people)
+                this.wipeInputFields()
             }
-            this.wipeInputFields()
         }
 
         private formListener() {
@@ -80,16 +116,34 @@ class ProjectList {
     templateEl: HTMLTemplateElement
     appendEl: HTMLDivElement
     sectionEl: HTMLElement
+    assignedProjects: any[]
 
     constructor(private type: "Active" | "Finished") {
         this.templateEl = document.getElementById("project-list")! as HTMLTemplateElement
         this.appendEl = document.getElementById("app")! as HTMLDivElement
+        this.assignedProjects = []
 
         const importTemplate = document.importNode(this.templateEl.content, true)
         this.sectionEl = importTemplate.firstElementChild as HTMLElement
         this.sectionEl.id = `${this.type}-projects`
+
+        projectState.addListener((projects: any[]) => {
+            this.assignedProjects = projects
+            this.renderProjects()
+        })
+
         this.renderProjectList()
         this.renderSection()
+    }
+
+    private renderProjects() {
+        const projectListEl = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement
+        for (const projectItem of this.assignedProjects) {
+            const listItem = document.createElement("li")
+            listItem.textContent = projectItem.title
+            projectListEl.appendChild(listItem)
+           console.log(projectItem.title)
+        }
     }
 
     private renderSection() {

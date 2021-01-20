@@ -5,6 +5,35 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+class ProjectState {
+    constructor() {
+        this.listeners = [];
+        this.projects = [];
+    }
+    static getInstance() {
+        if (this.instance) {
+            return this.instance;
+        }
+        this.instance = new ProjectState();
+        return this.instance;
+    }
+    addListener(listenerFn) {
+        this.listeners.push(listenerFn);
+    }
+    addProject(title, description, people) {
+        const newProject = {
+            id: Math.random().toString(),
+            title: title,
+            description: description,
+            people: people
+        };
+        this.projects.push(newProject);
+        for (const listenerFn of this.listeners) {
+            listenerFn(this.projects.slice());
+        }
+    }
+}
+const projectState = ProjectState.getInstance();
 const autobind = (_, _2, descriptor) => {
     const originalMethod = descriptor.value;
     const adjustedDescriptor = {
@@ -50,9 +79,9 @@ class ProjectInput {
         const inputUser = this.userInput();
         if (Array.isArray(inputUser)) {
             const [title, description, people] = inputUser;
-            console.log(title, description, people);
+            projectState.addProject(title, description, people);
+            this.wipeInputFields();
         }
-        this.wipeInputFields();
     }
     formListener() {
         this.formEl.addEventListener("submit", this.submitForm);
@@ -69,11 +98,25 @@ class ProjectList {
         this.type = type;
         this.templateEl = document.getElementById("project-list");
         this.appendEl = document.getElementById("app");
+        this.assignedProjects = [];
         const importTemplate = document.importNode(this.templateEl.content, true);
         this.sectionEl = importTemplate.firstElementChild;
         this.sectionEl.id = `${this.type}-projects`;
+        projectState.addListener((projects) => {
+            this.assignedProjects = projects;
+            this.renderProjects();
+        });
         this.renderProjectList();
         this.renderSection();
+    }
+    renderProjects() {
+        const projectListEl = document.getElementById(`${this.type}-projects-list`);
+        for (const projectItem of this.assignedProjects) {
+            const listItem = document.createElement("li");
+            listItem.textContent = projectItem.title;
+            projectListEl.appendChild(listItem);
+            console.log(projectItem.title);
+        }
     }
     renderSection() {
         const listId = `${this.type}-projects-list`;

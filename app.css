@@ -58,7 +58,7 @@ button:hover, button:active {
 .projects {
   margin: 1rem;
   border: 2px solid red;
-  color: white
+  color: black
 }
 
 .projects header {
@@ -67,6 +67,7 @@ button:hover, button:active {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: white
 }
 
 #Finished-projects {
@@ -75,6 +76,18 @@ button:hover, button:active {
 
 #Finished-projects header {
   background: deepskyblue;
+}
+
+.projects li {
+  box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.26);
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.projects ul {
+  list-style: none;
+  margin: 0;
+  padding: 1rem;
 }
 
 
