@@ -131,13 +131,25 @@ class ProjectItem extends Component {
             return `${this.project.people} members`;
         }
     }
-    renderList() { }
+    dragStart(e) {
+        console.log(e);
+    }
+    dragEnd(_) {
+        console.log("DragEnd");
+    }
+    renderList() {
+        this.sectionEl.addEventListener("dragstart", this.dragStart);
+        this.sectionEl.addEventListener("dragend", this.dragEnd);
+    }
     renderSection() {
         this.sectionEl.querySelector("h2").textContent = this.project.title;
         this.sectionEl.querySelector("h3").textContent = this.members;
         this.sectionEl.querySelector("p").textContent = this.project.description;
     }
 }
+__decorate([
+    autobind
+], ProjectItem.prototype, "dragStart", null);
 class ProjectList extends Component {
     constructor(type) {
         super("project-list", "app", false, `${type}-projects`);

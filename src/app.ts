@@ -1,3 +1,14 @@
+interface Drag {
+    dragStart(e: DragEvent): void
+    dragEnd(e: DragEvent): void
+}
+
+interface DragDrop {
+    dragOver(e: DragEvent): void
+    drop(e: DragEvent): void
+    dragLeave(e: DragEvent): void
+}
+
 enum ProjectStatus { Active, Finished }
 
 class Project {
@@ -134,7 +145,7 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
         }
 }
 
-class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements Drag {
     private project: Project
 
     get members() {
@@ -153,7 +164,19 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
         this.renderSection()
     }
 
-    renderList() {}
+    @autobind
+    dragStart(e: DragEvent) {
+        console.log(e)
+    }
+
+    dragEnd(_: DragEvent) {
+        console.log("DragEnd")
+    }
+
+    renderList() {
+        this.sectionEl.addEventListener("dragstart", this.dragStart)
+        this.sectionEl.addEventListener("dragend", this.dragEnd)
+    }
 
     renderSection() {
         this.sectionEl.querySelector("h2")!.textContent = this.project.title
