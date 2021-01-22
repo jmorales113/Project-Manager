@@ -123,10 +123,18 @@ class ProjectItem extends Component {
         this.renderList();
         this.renderSection();
     }
+    get members() {
+        if (this.project.people === 1) {
+            return "1 member";
+        }
+        else {
+            return `${this.project.people} members`;
+        }
+    }
     renderList() { }
     renderSection() {
         this.sectionEl.querySelector("h2").textContent = this.project.title;
-        this.sectionEl.querySelector("h3").textContent = this.project.people.toString();
+        this.sectionEl.querySelector("h3").textContent = this.members;
         this.sectionEl.querySelector("p").textContent = this.project.description;
     }
 }
@@ -155,7 +163,7 @@ class ProjectList extends Component {
     renderSection() {
         const listId = `${this.type}-projects-list`;
         this.sectionEl.querySelector("ul").id = listId;
-        this.sectionEl.querySelector("h2").textContent = `${this.type} projects`;
+        this.sectionEl.querySelector("h2").textContent = `${this.type} Projects`;
     }
     renderProjects() {
         const projectListEl = document.getElementById(`${this.type}-projects-list`);

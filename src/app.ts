@@ -137,6 +137,14 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
 class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
     private project: Project
 
+    get members() {
+        if (this.project.people === 1) {
+            return "1 member"
+        } else {
+            return `${this.project.people} members`
+        }
+    }
+
     constructor(templateId: string, project: Project) {
         super("single-project", templateId, false, project.id)
         this.project = project
@@ -149,7 +157,7 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
 
     renderSection() {
         this.sectionEl.querySelector("h2")!.textContent = this.project.title
-        this.sectionEl.querySelector("h3")!.textContent = this.project.people.toString()
+        this.sectionEl.querySelector("h3")!.textContent = this.members
         this.sectionEl.querySelector("p")!.textContent = this.project.description
     }
 }
@@ -182,7 +190,7 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
     renderSection() {
         const listId = `${this.type}-projects-list`
         this.sectionEl.querySelector("ul")!.id = listId
-        this.sectionEl.querySelector("h2")!.textContent = `${this.type} projects`
+        this.sectionEl.querySelector("h2")!.textContent = `${this.type} Projects`
     }
 
     private renderProjects() {

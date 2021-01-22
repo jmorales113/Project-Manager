@@ -7,7 +7,15 @@ html {
 }
 
 body {
-    margin: 0
+    margin: 0;
+    background-color: whitesmoke
+}
+
+#header h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: deepskyblue
 }
 
 label, input, textarea {
@@ -22,7 +30,7 @@ label {
 input, textarea {
     padding: 1rem 1rem;
     width: 100%;
-    max-width: 30%;
+    max-width: 50%;
     border: 1px solid lightgrey
 }
 
@@ -96,7 +104,6 @@ button:hover, button:active {
 }
 
 .projects li h3 {
-  color: black;
   font-size: 1rem
 }
 
