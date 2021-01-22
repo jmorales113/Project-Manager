@@ -116,6 +116,20 @@ class ProjectInput extends Component {
 __decorate([
     autobind
 ], ProjectInput.prototype, "submitForm", null);
+class ProjectItem extends Component {
+    constructor(templateId, project) {
+        super("single-project", templateId, false, project.id);
+        this.project = project;
+        this.renderList();
+        this.renderSection();
+    }
+    renderList() { }
+    renderSection() {
+        this.sectionEl.querySelector("h2").textContent = this.project.title;
+        this.sectionEl.querySelector("h3").textContent = this.project.people.toString();
+        this.sectionEl.querySelector("p").textContent = this.project.description;
+    }
+}
 class ProjectList extends Component {
     constructor(type) {
         super("project-list", "app", false, `${type}-projects`);
@@ -147,9 +161,7 @@ class ProjectList extends Component {
         const projectListEl = document.getElementById(`${this.type}-projects-list`);
         projectListEl.innerHTML = "";
         for (const projectItem of this.assignedProjects) {
-            const listItem = document.createElement("li");
-            listItem.textContent = projectItem.title;
-            projectListEl.appendChild(listItem);
+            new ProjectItem(this.sectionEl.querySelector("ul").id, projectItem);
         }
     }
 }
