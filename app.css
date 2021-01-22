@@ -15,7 +15,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: deepskyblue
+    color: deepskyblue;
+    font-weight: bold
 }
 
 label, input, textarea {
@@ -42,8 +43,8 @@ input:focus, textarea:focus {
 }
 
 button {
-    background: lightskyblue;
-    border: 1px solid lightskyblue;
+    background: deepskyblue;
+    border: 1px solid deepskyblue;
     cursor: pointer;
     color: black;
     font-weight: bold;
@@ -52,8 +53,8 @@ button {
 }
 
 button:hover, button:active {
-    background: deepskyblue;
-    border-color: deepskyblue
+    background: lightskyblue;
+    border-color: lightskyblue
 }
 
 #user-input {
@@ -76,14 +77,6 @@ button:hover, button:active {
   justify-content: center;
   align-items: center;
   color: white
-}
-
-#Finished-projects {
-  border-color: deepskyblue;
-}
-
-#Finished-projects header {
-  background: deepskyblue;
 }
 
 .projects li {
@@ -112,6 +105,26 @@ button:hover, button:active {
   margin: 0
 }
 
-#finished-projects li h2 {
+#Finished-projects {
+  border-color: deepskyblue;
+}
+
+#Finished-projects header {
+  background: deepskyblue;
+}
+
+#Finished-projects li h2 {
   color: deepskyblue
 }
+
+#Finished-projects .drop {
+  background: lightskyblue;
+}
+
+.drop {
+  background: lightsalmon
+}
+
+
+
+
