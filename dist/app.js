@@ -42,6 +42,16 @@ class ProjectState extends State {
     addProject(title, description, people) {
         const newProject = new Project(Math.random().toString(), title, description, people, ProjectStatus.Active);
         this.projects.push(newProject);
+        this.updateListeners();
+    }
+    moveProject(projectId, status) {
+        const project = this.projects.find((project) => project.id === projectId);
+        if (project && project.status !== status) {
+            project.status = status;
+            this.updateListeners();
+        }
+    }
+    updateListeners() {
         for (const listenerFn of this.listeners) {
             listenerFn(this.projects.slice());
         }
@@ -132,7 +142,8 @@ class ProjectItem extends Component {
         }
     }
     dragStart(e) {
-        console.log(e);
+        e.dataTransfer.setData("text/plain", this.project.id);
+        e.dataTransfer.effectAllowed = "move";
     }
     dragEnd(_) {
         console.log("DragEnd");
@@ -158,11 +169,16 @@ class ProjectList extends Component {
         this.renderList();
         this.renderSection();
     }
-    dragOver(_) {
-        const ulEl = this.sectionEl.querySelector("ul");
-        ulEl.classList.add("drop");
+    dragOver(e) {
+        if (e.dataTransfer && e.dataTransfer.types[0] === "text/plain") {
+            e.preventDefault();
+            const ulEl = this.sectionEl.querySelector("ul");
+            ulEl.classList.add("drop");
+        }
     }
-    drop(_) {
+    drop(e) {
+        const projectId = e.dataTransfer.getData("text/plain");
+        projectState.moveProject(projectId, this.type === "Active" ? ProjectStatus.Active : ProjectStatus.Finished);
     }
     dragLeave(_) {
         const ulEl = this.sectionEl.querySelector("ul");
@@ -201,6 +217,9 @@ class ProjectList extends Component {
 __decorate([
     autobind
 ], ProjectList.prototype, "dragOver", null);
+__decorate([
+    autobind
+], ProjectList.prototype, "drop", null);
 __decorate([
     autobind
 ], ProjectList.prototype, "dragLeave", null);

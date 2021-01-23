@@ -45,8 +45,20 @@ class ProjectState extends State<Project> {
     addProject(title: string, description: string, people: number) {
         const newProject = new Project(Math.random().toString(), title, description, people, ProjectStatus.Active)
         this.projects.push(newProject)
+        this.updateListeners()
+    }
+
+    moveProject(projectId: string, status: ProjectStatus) {
+        const project = this.projects.find((project) => project.id === projectId)
+        if (project && project.status !== status) {
+            project.status = status
+            this.updateListeners()
+        }
+    }
+
+    private updateListeners() {
         for (const listenerFn of this.listeners) {
-            listenerFn(this.projects.slice())
+          listenerFn(this.projects.slice())
         }
     }
 }
@@ -166,7 +178,8 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements 
 
     @autobind
     dragStart(e: DragEvent) {
-        console.log(e)
+        e.dataTransfer!.setData("text/plain", this.project.id)
+        e.dataTransfer!.effectAllowed = "move"
     }
 
     dragEnd(_: DragEvent) {
@@ -197,13 +210,18 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> implements Drag
     }
 
     @autobind
-    dragOver(_: DragEvent) {
-        const ulEl = this.sectionEl.querySelector("ul")!
-        ulEl.classList.add("drop")
+    dragOver(e: DragEvent) {
+        if (e.dataTransfer && e.dataTransfer.types[0] === "text/plain") {
+            e.preventDefault()
+            const ulEl = this.sectionEl.querySelector("ul")!
+            ulEl.classList.add("drop")
+        }
     }
 
-    drop(_: DragEvent) {
-
+    @autobind
+    drop(e: DragEvent) {
+        const projectId = e.dataTransfer!.getData("text/plain")
+        projectState.moveProject(projectId, this.type === "Active" ? ProjectStatus.Active : ProjectStatus.Finished)
     }
 
     @autobind
