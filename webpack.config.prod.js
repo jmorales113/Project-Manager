@@ -22,7 +22,4 @@ module.exports = {
     extensions: [".ts", ".js"],
   },
   plugins: [new CleanPlugin.CleanWebpackPlugin()],
-  devServer: {
-    contentBase: path.resolve(__dirname, "index.html")
-  }
-};
+}
