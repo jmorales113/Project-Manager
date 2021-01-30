@@ -35,12 +35,9 @@ Simply fill out the form with the title, description and the amount of people on
 
 https://jmorales-project-manager.netlify.app/
 
-![Chat-App-Join](https://user-images.githubusercontent.com/57970306/100686432-26aaab80-3333-11eb-97fa-cd89068be97c.PNG)
-![Chat-App-Welcome](https://user-images.githubusercontent.com/57970306/100686438-2ca08c80-3333-11eb-939e-337523386a39.PNG)
-![Chat-App-Multiple-Users](https://user-images.githubusercontent.com/57970306/100686444-32966d80-3333-11eb-8b53-5fb1a0b7c825.PNG)
-![Chat-App-Chatting](https://user-images.githubusercontent.com/57970306/100686450-3629f480-3333-11eb-9ce9-165202129444.PNG)
-![Chat-App-Leaving](https://user-images.githubusercontent.com/57970306/100686465-3de99900-3333-11eb-8cc5-633d6cc7a96c.PNG)
-![Chat-App-Share-Location](https://user-images.githubusercontent.com/57970306/100686478-4346e380-3333-11eb-8300-0267c777fcd9.PNG)
+![project-manager](https://user-images.githubusercontent.com/57970306/106346517-9de5b880-626c-11eb-9745-ab0ea49b7acc.PNG)
+![project-manager-angular](https://user-images.githubusercontent.com/57970306/106346630-4a279f00-626d-11eb-8021-fc43b1a701ab.PNG)
+![project-manager-typescript](https://user-images.githubusercontent.com/57970306/106346632-4c89f900-626d-11eb-88a1-65579b6b38f4.PNG)
 
 ## Contributor
 
