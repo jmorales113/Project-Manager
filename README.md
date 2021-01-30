@@ -6,7 +6,7 @@ A project manager application to keep track of your projects! Built with Typescr
 
 ## Features
 
-Simply fill out the form with the title, description and the amount of people on your project. It will then be added to the active projects list. When you or your team have completed the project, you can drag and drop it into the finished projects list. 
+Simply fill out the form with the title, description and the amount of people on your project. Then click on the add project button. Your project will be added to the active projects list. When you or your team have completed the project, you can drag and drop it into the finished projects list. 
 
 ## Installation
 
